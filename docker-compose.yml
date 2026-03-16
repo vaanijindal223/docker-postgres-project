@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+
+  backend:
+    build: ./backend
+    container_name: backend_container
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - app_net
+
+  db:
+    build: ./database
+    container_name: postgres_container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_net
+
+volumes:
+  postgres_data:
+
+networks:
+  app_net:
+    driver: bridge
